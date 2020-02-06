@@ -36,27 +36,16 @@
                                                         <constraint firstAttribute="width" constant="140" id="NEf-uL-daL"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ef0-Cl-2q2">
-                                                    <rect key="frame" x="165" y="72.5" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="6bh-zs-pvW" firstAttribute="centerY" secondItem="Yd4-Z9-61T" secondAttribute="centerY" id="AHS-Ee-OK3"/>
-                                                <constraint firstItem="ef0-Cl-2q2" firstAttribute="leading" secondItem="6bh-zs-pvW" secondAttribute="trailing" constant="15" id="Biv-0I-RGB"/>
-                                                <constraint firstItem="ef0-Cl-2q2" firstAttribute="centerY" secondItem="6bh-zs-pvW" secondAttribute="centerY" id="Dx8-dQ-lFZ"/>
                                                 <constraint firstItem="6bh-zs-pvW" firstAttribute="leading" secondItem="Yd4-Z9-61T" secondAttribute="leading" constant="10" id="FsL-7n-Pjq"/>
                                                 <constraint firstAttribute="bottom" secondItem="6bh-zs-pvW" secondAttribute="bottom" constant="6" id="HWV-It-a52"/>
                                                 <constraint firstItem="6bh-zs-pvW" firstAttribute="top" secondItem="Yd4-Z9-61T" secondAttribute="top" constant="6" id="Rji-wq-tEE"/>
-                                                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="ef0-Cl-2q2" secondAttribute="trailing" constant="10" id="qrW-UX-T6c"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="photoImageView" destination="6bh-zs-pvW" id="HyI-Kr-pcK"/>
-                                            <outlet property="titleLabel" destination="ef0-Cl-2q2" id="qzw-Yk-wTC"/>
-                                            <segue destination="u4n-Rk-Ji6" kind="show" id="KvU-ms-mij"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -86,13 +75,13 @@
         <!--Photo Detail View Controller-->
         <scene sceneID="f79-IF-FXL">
             <objects>
-                <viewController id="u4n-Rk-Ji6" customClass="PhotoDetailViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoDetailViewController" id="u4n-Rk-Ji6" customClass="PhotoDetailViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ef6-sy-JQU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q1F-ve-fGG">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -105,6 +94,9 @@
                         <viewLayoutGuide key="safeArea" id="wlu-sW-vue"/>
                     </view>
                     <navigationItem key="navigationItem" id="Erg-lS-0b8"/>
+                    <connections>
+                        <outlet property="detailImageView" destination="Q1F-ve-fGG" id="hTg-Yx-1bs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w4F-KY-il0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

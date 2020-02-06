@@ -13,6 +13,5 @@ struct Photos: Codable {
 }
 
 struct Photo: Codable {
-    let title: String
     let image_url: String
 }

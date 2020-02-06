@@ -36,6 +36,10 @@ class PhotoListViewModel {
         return cellViewModels.count
     }
     
+    var isAllowSegue: Bool = false
+    
+    var selectedPhoto: Photo?
+    
     var reloadTableViewClosure: (()->())?
     var updateLoadingStatus: (()->())?
     var showAlertClosure: (()->())?
@@ -61,8 +65,7 @@ class PhotoListViewModel {
     }
     
     func createCellViewModel( photo: Photo ) -> PhotoListCellViewModel {
-        return PhotoListCellViewModel( titleText: photo.title,
-                                       imageUrl: photo.image_url)
+        return PhotoListCellViewModel(imageUrl: photo.image_url)
     }
     
     private func processFetchedPhoto( photos: [Photo] ) {
@@ -75,7 +78,15 @@ class PhotoListViewModel {
     }
 }
 
+extension PhotoListViewModel {
+    func userPressed( at indexPath: IndexPath ){
+        let photo = self.photos[indexPath.row]
+       
+            self.isAllowSegue = true
+            self.selectedPhoto = photo
+    }
+}
+
 struct PhotoListCellViewModel {
-    let titleText: String
     let imageUrl: String
 }
