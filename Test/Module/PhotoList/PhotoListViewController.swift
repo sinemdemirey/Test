@@ -19,11 +19,21 @@ class PhotoListViewController: UIViewController {
         return PhotoListViewModel()
     }()
     
+    var isLoaded = false
+    var page = 1
+    
+    var apiKey = "a6d819499131071f158fd740860a5a88"
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
         initVM()
+        initTableView()
         
+       
+
+      
     }
     
     func initView() {
@@ -33,7 +43,6 @@ class PhotoListViewController: UIViewController {
     }
     
     func initVM() {
-        
         // Naive binding
         viewModel.showAlertClosure = { [weak self] () in
             DispatchQueue.main.async {
@@ -70,32 +79,106 @@ class PhotoListViewController: UIViewController {
 
     }
     
+    func initTableView(){
+        let loadingCell = UINib(nibName: "SpinnerTableViewCell", bundle: nil)
+        photoTableView.register(loadingCell, forCellReuseIdentifier: "loadingCell")
+    }
+    
     func showAlert( _ message: String ) {
         let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
         alert.addAction( UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func getData() {
+        let baseURLString = "https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=a6d819499131071f158fd740860a5a88&page=1&format=json&nojsoncallback=\(page)"
+        Alamofire.request(baseURLString).responseJSON { (response) in
+              switch response.result {
+              case .success(let value):
+                  let json = JSON(value)
+                  print(json)
+                  let photos = json["photos"].dictionaryValue
+                  let pages = photos["pages"]!.int
+                  let total = photos["total"]!.int
+                  
+                  print(pages!)
+                  print(total!)
+              case .failure(let error):
+                  print(error)
+              }
+          }
+    }
 
 }
 
-extension PhotoListViewController : UITableViewDelegate, UITableViewDataSource {
+//MARK: — TableView Extensions
+extension PhotoListViewController : UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfCells
+        if section == 0{
+            return viewModel.numberOfCells
+        }else if section == 1{
+            return 1
+        }else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = photoTableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotoListTableViewCell else {
-            fatalError("Cell not exists in storyboard.")
+        if indexPath.section == 0{
+            guard let cell = photoTableView.dequeueReusableCell(withIdentifier: "PhotoCell", for: indexPath) as? PhotoListTableViewCell else {
+                fatalError("Cell not exists in storyboard.")
+            }
+            let cellVM = viewModel.getCellViewModel( at: indexPath )
+            cell.photoListCellViewModel = cellVM
+            return cell
+        } else {
+            let cell = photoTableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! SpinnerTableViewCell
+            cell.spinner.startAnimating()
+            return cell
         }
-        
-        let cellVM = viewModel.getCellViewModel( at: indexPath )
-        cell.photoListCellViewModel = cellVM
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150.0
+        if indexPath.section == 0 {
+            return 150.0
+        } else {
+            return 50.0
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+
+        if (offsetY > contentHeight - scrollView.frame.height * 4) && !viewModel.isLoading {
+            //loadMoreData()
+        }
+    }
+    
+    func loadMoreData(){
+        if !viewModel.isLoading {
+//            viewModel.isLoading = true
+            DispatchQueue.global().async {
+                sleep(2)
+                DispatchQueue.main.async {
+                    self.photoTableView.reloadData()
+                    self.viewModel.isLoading = false
+                }
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastElement = viewModel.numberOfCells - 1
+        if indexPath.row == lastElement {
+            if !self.isLoaded {
+               // viewModel.initFetch()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -129,9 +212,13 @@ class PhotoListTableViewCell : UITableViewCell {
     
     var photoListCellViewModel : PhotoListCellViewModel? {
         didSet{
-            let url = URL(string: photoListCellViewModel!.imageUrl)
-            let data = try? Data(contentsOf: url!)
-            photoImageView.image = UIImage(data: data!)
+            guard let imageURL = URL(string: photoListCellViewModel!.imageUrl) else { return }
+            DispatchQueue.global().async {
+                guard let imageData = try? Data(contentsOf: imageURL) else { return }
+                DispatchQueue.main.async {
+                    self.photoImageView.image = UIImage(data: imageData)
+                }
+            }
         }
     }
 }

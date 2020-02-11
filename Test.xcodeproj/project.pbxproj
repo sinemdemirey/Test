@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		B29030E44E968C62B3DF030A /* Pods_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9679920AAF92632ADC06DB /* Pods_Test.framework */; };
+		B420D17623EC58600060D63C /* SpinnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B420D17423EC58600060D63C /* SpinnerTableViewCell.swift */; };
+		B420D17723EC58600060D63C /* SpinnerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B420D17523EC58600060D63C /* SpinnerTableViewCell.xib */; };
 		B4A12FDB23E98C3B0043A2E6 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A12FDA23E98C3B0043A2E6 /* PhotoDetailViewController.swift */; };
 		B4A12FE423E98CF20043A2E6 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A12FE323E98CF20043A2E6 /* APIService.swift */; };
 		B4A12FE623E997960043A2E6 /* PhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A12FE523E997960043A2E6 /* PhotoListViewModel.swift */; };
@@ -23,6 +25,8 @@
 /* Begin PBXFileReference section */
 		7306AF3894DBE5405301BDB5 /* Pods-Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.debug.xcconfig"; path = "Target Support Files/Pods-Test/Pods-Test.debug.xcconfig"; sourceTree = "<group>"; };
 		A50131BCA7C87BA833D3A0B7 /* Pods-Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.release.xcconfig"; path = "Target Support Files/Pods-Test/Pods-Test.release.xcconfig"; sourceTree = "<group>"; };
+		B420D17423EC58600060D63C /* SpinnerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerTableViewCell.swift; sourceTree = "<group>"; };
+		B420D17523EC58600060D63C /* SpinnerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpinnerTableViewCell.xib; sourceTree = "<group>"; };
 		B4A12FDA23E98C3B0043A2E6 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		B4A12FE323E98CF20043A2E6 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		B4A12FE523E997960043A2E6 /* PhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewModel.swift; sourceTree = "<group>"; };
@@ -64,8 +68,15 @@
 				7306AF3894DBE5405301BDB5 /* Pods-Test.debug.xcconfig */,
 				A50131BCA7C87BA833D3A0B7 /* Pods-Test.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B400AE5F23F17E5C00309609 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B420D17523EC58600060D63C /* SpinnerTableViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B4A12FDC23E98C500043A2E6 /* Service */ = {
@@ -145,6 +156,8 @@
 				B4A12FDC23E98C500043A2E6 /* Service */,
 				B4A12FDF23E98C730043A2E6 /* Module */,
 				B4A12FDE23E98C620043A2E6 /* Model */,
+				B400AE5F23F17E5C00309609 /* View */,
+				B420D17423EC58600060D63C /* SpinnerTableViewCell.swift */,
 				B4A12FE223E98CB80043A2E6 /* Storyboards */,
 				B4BE16F823E83E92001D81AE /* Assets.xcassets */,
 				B4BE16FD23E83E92001D81AE /* Info.plist */,
@@ -215,6 +228,7 @@
 				B4BE16FC23E83E92001D81AE /* LaunchScreen.storyboard in Resources */,
 				B4BE16F923E83E92001D81AE /* Assets.xcassets in Resources */,
 				B4BE16F723E83E8E001D81AE /* Main.storyboard in Resources */,
+				B420D17723EC58600060D63C /* SpinnerTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +288,7 @@
 				B4BE16F023E83E8E001D81AE /* AppDelegate.swift in Sources */,
 				B4A12FDB23E98C3B0043A2E6 /* PhotoDetailViewController.swift in Sources */,
 				B4BE16F223E83E8E001D81AE /* SceneDelegate.swift in Sources */,
+				B420D17623EC58600060D63C /* SpinnerTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

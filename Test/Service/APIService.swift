@@ -17,19 +17,17 @@ enum APIError: String, Error {
 }
 
 private let baseURLString = "https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=\(apiKey)&per_page=20&format=json&nojsoncallback=1"
+
 private let apiKey = "a6d819499131071f158fd740860a5a88"
 
-
-// old api key = 47eb41bd59d6b19c51ab87197a5a47d7
  
-
+//MARK: — Service Protocol
 protocol APIServiceProtocol {
     func fetchPopularPhoto( complete: @escaping ( _ success: Bool, _ photos: [Photo], _ error: APIError? )->() )
 }
 
 class APIService: APIServiceProtocol {
     
-    // Simulate a long waiting for fetching
     func fetchPopularPhoto( complete: @escaping ( _ success: Bool, _ photos: [Photo], _ error: APIError? )->() ) {
         DispatchQueue.global().async {
             
@@ -55,13 +53,25 @@ class APIService: APIServiceProtocol {
                     complete(true,photoURL,nil)
                     case .failure(let error):
                     print(error)
-                
                 }
             }
         }
     }
     
-    
+    func fetchPages() {
+        Alamofire.request(baseURLString).responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                print(json)
+//                let photos = json["photos"].dictionaryValue
+//                let pages = photos["pages"]!.int
+//                let total = photos["total"]!.int
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 
