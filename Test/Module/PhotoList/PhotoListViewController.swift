@@ -22,26 +22,21 @@ class PhotoListViewController: UIViewController {
     var isLoaded = false
     var page = 1
     
-    var apiKey = "a6d819499131071f158fd740860a5a88"
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
         initVM()
         initTableView()
-        
-       
-
-      
     }
     
+    //MARK: — initView Methode
     func initView() {
         self.navigationItem.title = "Recent Photos"
         photoTableView.estimatedRowHeight = 150
         photoTableView.rowHeight = UITableView.automaticDimension
     }
     
+    //MARK: — initViewModel Methode
     func initVM() {
         // Naive binding
         viewModel.showAlertClosure = { [weak self] () in
@@ -79,6 +74,7 @@ class PhotoListViewController: UIViewController {
 
     }
     
+    //MARK: — initTableView Methode
     func initTableView(){
         let loadingCell = UINib(nibName: "SpinnerTableViewCell", bundle: nil)
         photoTableView.register(loadingCell, forCellReuseIdentifier: "loadingCell")
@@ -89,26 +85,6 @@ class PhotoListViewController: UIViewController {
         alert.addAction( UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
-    func getData() {
-        let baseURLString = "https://www.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=a6d819499131071f158fd740860a5a88&page=1&format=json&nojsoncallback=\(page)"
-        Alamofire.request(baseURLString).responseJSON { (response) in
-              switch response.result {
-              case .success(let value):
-                  let json = JSON(value)
-                  print(json)
-                  let photos = json["photos"].dictionaryValue
-                  let pages = photos["pages"]!.int
-                  let total = photos["total"]!.int
-                  
-                  print(pages!)
-                  print(total!)
-              case .failure(let error):
-                  print(error)
-              }
-          }
-    }
-
 }
 
 //MARK: — TableView Extensions
@@ -207,6 +183,7 @@ extension PhotoListViewController {
     }
 }
 
+//MARK: — TableViewCell 
 class PhotoListTableViewCell : UITableViewCell {
     @IBOutlet weak var photoImageView: UIImageView!
     
